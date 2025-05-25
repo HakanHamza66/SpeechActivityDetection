@@ -1,0 +1,15 @@
+# Veri klasörünü dahil etme
+data/
+
+# PyCharm ayar dosyaları
+.idea/
+
+# Geçici dosyalar
+__pycache__/
+*.pyc
+
+# Output dosyaları
+*.npy
+*.csv
+*.wav
+*.flac
