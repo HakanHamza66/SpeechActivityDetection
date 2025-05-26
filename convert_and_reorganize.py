@@ -18,10 +18,8 @@ def convert_and_group(flac_files):
     current_output_folder = os.path.join(OUTPUT_DIR, str(folder_count))
     os.makedirs(current_output_folder, exist_ok=True)
 
-    for idx, flac_file in enumerate(tqdm(flac_files)):
+    for flac_file in tqdm(flac_files, desc="Converting FLAC to WAV"):
         data, sr = sf.read(flac_file)
-        if sr != TARGET_SR:
-            print(f"Warning: {flac_file} sample rate is {sr}, expected {TARGET_SR}")
         if file_count == FILES_PER_FOLDER:
             folder_count += 1
             file_count = 0
@@ -33,7 +31,7 @@ def convert_and_group(flac_files):
         sf.write(out_path, data, TARGET_SR)
         file_count += 1
 
-if __name__ == "__main__":
+def main():
     all_flacs = find_all_flac_files(INPUT_DIR)
     print(f"Found {len(all_flacs)} FLAC files.")
     convert_and_group(all_flacs)
