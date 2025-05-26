@@ -4,8 +4,6 @@ import librosa
 import matplotlib.pyplot as plt
 import random
 from pathlib import Path
-
-# === Ayarlar ===
 NOISE_DIR = "data/noise"
 SPEECH_DIR = "data/clean_wav"
 SAMPLE_RATE = 16000
@@ -34,22 +32,16 @@ def plot_energy_comparison(noise_energies, speech_energies, threshold):
     plt.show()
 
 def main():
-    # Gürültü verileri
     noise_files = list(Path(NOISE_DIR).rglob("*.wav"))
     noise_sample_files = random.sample(noise_files, NUM_SAMPLES)
     noise_energies = [compute_average_log_energy(str(f)) for f in noise_sample_files]
-
-    # Konuşma verileri
     speech_files = list(Path(SPEECH_DIR).rglob("*.wav"))
     speech_sample_files = random.sample(speech_files, NUM_SAMPLES)
     speech_energies = [compute_average_log_energy(str(f)) for f in speech_sample_files]
-
-    # Adaptive threshold = mean + std
     threshold = np.mean(noise_energies) + np.std(noise_energies)
 
-    # Kaydet
     with open("adaptive_threshold.txt", "w") as f:
         f.write(f"{threshold:.4f}")
 
-    print(f"✅ Adaptive Threshold: {threshold:.4f}")
+    print(f"Adaptive Threshold: {threshold:.4f}")
     plot_energy_comparison(noise_energies, speech_energies, threshold)

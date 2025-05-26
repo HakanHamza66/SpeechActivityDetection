@@ -24,10 +24,6 @@ def plot_spectrogram_with_sad_overlay():
     common_stems = set(Path(f).stem.replace("_pred", "") for f in pred_files) & \
                    set(Path(f).stem for f in feature_files)
 
-    if not common_stems:
-        print("Uygun ortak dosya bulunamadı.")
-        return
-
     sample_stem = random.choice(list(common_stems))
 
     wav_path = Path(MIXED_AUDIO_DIR) / f"{sample_stem}.wav"
@@ -54,8 +50,7 @@ def plot_spectrogram_with_sad_overlay():
     plt.show()
     return y,sr
 def plot_cepstrum_analysis(y, sr):
-    # Cepstrum hesapla
-    frame = y[0:FRAME_SIZE] * np.hamming(FRAME_SIZE)  # sadece ilk frame örnek olsun
+    frame = y[0:FRAME_SIZE] * np.hamming(FRAME_SIZE)
     spectrum = np.fft.fft(frame, n=N_FFT)
     log_spectrum = np.log(np.abs(spectrum) + 1e-10)
     cepstrum = np.abs(np.fft.ifft(log_spectrum))
