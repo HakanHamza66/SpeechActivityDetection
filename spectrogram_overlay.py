@@ -74,5 +74,3 @@ def plot_cepstrum_analysis(y, sr):
 def main():
     y,sr=plot_spectrogram_with_sad_overlay()
     plot_cepstrum_analysis(y, sr)
-
-

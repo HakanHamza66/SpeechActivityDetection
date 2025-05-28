@@ -5,7 +5,7 @@ from threshold_detection import main as threshold_main
 from rule_based_prediction import main as prediction_main
 from visualization import main as visualization_main
 from spectrogram_overlay import main as sad_spectrogram_main
-
+from video_sad_overlay import run_video_sad
 def main():
     print("1. Files converting and reorganizing...")
     flacs = find_all_flac_files("data/speech")
@@ -25,8 +25,8 @@ def main():
 
     print("6. Random sample visualization ...")
     visualization_main()
-    print("7. Spectrogram + SAD overlay visualization...")
-    sad_spectrogram_main()
 
+    print("7. Video SAD")
+    run_video_sad()
 if __name__ == "__main__":
     main()

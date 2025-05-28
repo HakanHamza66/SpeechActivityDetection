@@ -28,11 +28,11 @@ def extract_features_from_file(file_path):
     features = np.vstack([log_energy, centroid, mfccs])
     feature_names = ['log_energy', 'spectral_centroid'] + [f'mfcc_{i+1}' for i in range(N_MFCC)]
     df = pd.DataFrame(features.T, columns=feature_names)
-    return df
+    return df, y, sr, stft
 
 def main():
     mixed_files = list(Path(INPUT_DIR).rglob("*.wav"))
     for file_path in tqdm(mixed_files, desc="Extracting features"):
-        df = extract_features_from_file(str(file_path))
+        df, _, _, _ = extract_features_from_file(str(file_path))
         out_csv = Path(FEATURES_DIR) / (file_path.stem + ".csv")
         df.to_csv(out_csv, index=False)
